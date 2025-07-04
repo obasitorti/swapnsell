@@ -40,7 +40,7 @@ class Product(models.Model):
     photo_of_product = models.ImageField(null=True, blank=True)
     another_photo = models.ImageField(null=True, blank=True)
     listing_date = models.DateTimeField(default=now)
-    contact_number = models.FloatField(null=True, blank=True)
+    contact_number = models.CharField(null=True, blank=True)
 
 
     def __str__(self):
