@@ -1,0 +1,10 @@
+{% extends "swapandsell/base.html" %}
+
+{% block content %}
+<h1>Delete Gadget</h1>
+<p>Are you sure you want to delete "{{ gadget.name }}"?</p>
+<form action="{% url 'swapandsell:delete_product' gadget.id %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn">Confirm</button>
+</form>
+{% endblock content %}

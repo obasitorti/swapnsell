@@ -11,7 +11,7 @@
             <ul>
                 <a class="btn" href="{% url 'swapandsell:detail' gadget.id %}">View</a>
                 <a class="btn" href="{% url 'swapandsell:edit_product' gadget.id %}">Edit</a>
-                <a class="btn" href="">Delete</a>
+                <a class="btn" href="{% url 'swapandsell:delete_product' gadget.id %}">Delete</a>
             </ul>
             <hr/>
         {% empty %}

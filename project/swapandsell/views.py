@@ -44,3 +44,11 @@ def edit_product(request, detail_id):
             return redirect('swapandsell:all_gadgets')
     context = {'form': form, 'gadget': gadget}
     return render(request, 'swapandsell/edit_product.html', context)
+
+def delete_product(request, detail_id):
+    gadget = Product.objects.get(id=detail_id)
+    if request.method == 'POST':
+        gadget.delete()
+        return redirect('swapandsell:my_gadgets')
+    context = {'gadget': gadget}
+    return render(request, 'swapandsell/delete_product.html', context)
