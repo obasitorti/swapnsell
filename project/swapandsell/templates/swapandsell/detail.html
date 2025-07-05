@@ -1,0 +1,17 @@
+{% extends "swapandsell/base.html" %}
+
+{% block content %}
+<div>
+
+    <h1>Gadget Details</h1>
+    <h1>{{ gadget.name }}</h1>
+    <p><b>Condition:</b> {{ gadget.condition }}</p>
+    <p><b>Sale Type:</b> {{ gadget.sale_type }}</p>
+    <p><b>Price:</b> $ {{ gadget.price|floatformat:2 }}</p>
+    <p><b>Location:</b> {{ gadget.address }}</p>
+    <p><b>Post Date:</b> {{ gadget.listing_date }}</p>
+    <p><b>Photos:</b></p>
+</div>
+{% endblock content %}
+
+

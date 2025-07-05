@@ -1,0 +1,12 @@
+{% extends "swapandsell/base.html" %}
+{% block content %}
+
+<form action="{% url 'swapandsell:edit_product' gadget.id %}" method='post' enctype="multipart/form-data">
+    <div class="form-group">
+        {% csrf_token %}
+        {{ form.as_p }}
+    </div>
+    <button type="submit" class="btn">Edit gadget</button>
+</form>
+
+{% endblock content %}
