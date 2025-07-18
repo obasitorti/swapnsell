@@ -15,3 +15,4 @@ class ProductForm(forms.ModelForm):
             'another_photo',
             'contact_number'
         ]
+

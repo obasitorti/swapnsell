@@ -1,0 +1,14 @@
+{% extends "swapandsell/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Login</button>
+        <input type="hidden" name="next"
+        value="{% url 'swapandsell:index' %}" />
+    </form>
+
+{% endblock content %}
