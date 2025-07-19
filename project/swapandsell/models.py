@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.timezone import now
 from datetime import datetime
+from django.contrib.auth.models import User
 
 class Product(models.Model):
 
@@ -18,7 +19,7 @@ class Product(models.Model):
         ANDROID = "Android"
         LAPTOP = "Laptop"
 
-    
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, null=True, blank=True)
     condition = models.CharField(
         max_length=10,
