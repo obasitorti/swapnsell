@@ -1,18 +1,49 @@
-<nav class="navbar bg-dark text-light px-4 py-2">
-  <a class="text-light text-decoration-none me-3" href="{% url 'swapandsell:index' %}">GADGETS</a>
-  <a class="text-light text-decoration-none me-3" href="{% url 'swapandsell:all_gadgets' %}">ALL GADGETS</a>
-  <a class="text-light text-decoration-none me-3" href="{% url 'swapandsell:add_product' %}">NEW GADGET</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 py-2">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'swapandsell:index' %}">GADGETS</a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+      aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'swapandsell:all_gadgets' %}">All Gadgets</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'swapandsell:add_product' %}">New Gadget</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'swapandsell:my_gadgets' %}">My Gadgets</a>
+        </li>
+        {% endif %}
+      </ul>
 
-  {% if user.is_authenticated %}
-    <span class="me-3">{{ user.username }}</span>
-    <form action="{% url 'users:logout' %}" method="post" style="display:inline;">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-sm btn-outline-light">LOG OUT</button>
-    </form>
-  {% else %}
-    <a class="text-light text-decoration-none me-3" href="{% url 'users:register' %}">REGISTER</a>
-    <a class="text-light text-decoration-none me-3" href="{% url 'users:login' %}">LOGIN</a>
-  {% endif %}
+      <ul class="navbar-nav ms-auto">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <span class="navbar-text me-3">Hi, {{ user.username }}</span>
+        </li>
+        <li class="nav-item">
+          <form action="{% url 'users:logout' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-outline-light">Log Out</button>
+          </form>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'users:register' %}">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'users:login' %}">Login</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
 </nav>
 
 {% block content %}

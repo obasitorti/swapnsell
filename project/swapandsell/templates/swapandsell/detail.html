@@ -11,6 +11,8 @@
     <p><b>Location:</b> {{ gadget.address }}</p>
     <p><b>Post Date:</b> {{ gadget.listing_date }}</p>
     <p><b>Photos:</b></p>
+    <img src="{{ gadget.photo_of_product.url }}" alt="Gadget Image 1" class="img-fluid mb-3" style="max-width: 100%; height: auto;">
+    <img src="{{ gadget.another_photo.url }}" alt="Gadget Image 2" class="img-fluid mb-3" style="max-width: 100%; height: auto;">
 </div>
 {% endblock content %}
 

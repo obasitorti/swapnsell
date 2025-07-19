@@ -1,4 +1,6 @@
 from django.shortcuts import render
+
+from .filters import ProductFilter
 from .models import Product
 from .forms import ProductForm
 from django.shortcuts import redirect
@@ -9,7 +11,9 @@ def index(request):
 
 def all_gadgets(request):
     all_gadgets = Product.objects.order_by('-listing_date')
-    context = {'all_gadgets': all_gadgets}
+    my_filter = ProductFilter(request.GET, queryset=all_gadgets)
+    all_gadgets = my_filter.qs
+    context = {'all_gadgets': all_gadgets, 'my_filter': my_filter}
     return render(request, 'swapandsell/all_gadgets.html', context)
 
 def add_product(request):
@@ -18,7 +22,9 @@ def add_product(request):
     else:
         form = ProductForm(data=request.POST, files=request.FILES)
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
             return redirect('swapandsell:all_gadgets')
     context = {'form': form}
     return render(request, 'swapandsell/add_product.html', context)
@@ -29,7 +35,7 @@ def detail(request, detail_id):
     return render(request, 'swapandsell/detail.html', context)
 
 def my_gadgets(request):
-    my_gadgets = Product.objects.order_by('-listing_date')
+    my_gadgets = request.user.product_set.order_by('-listing_date')
     context = {'all_gadgets': my_gadgets}
     return render(request, 'swapandsell/mygadgets.html', context)
 
