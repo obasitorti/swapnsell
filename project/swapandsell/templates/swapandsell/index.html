@@ -1,5 +1,9 @@
 {% extends "swapandsell/base.html" %}
+{% load static %}
 
 {% block content %}
-<h1>Welcome to Swap'N'Sell</h1>
+  <div class="text-center">
+    <img src="{% static 'swapandsell/images/swapsell1.jpg' %}" alt="Phone Swap" class="img-fluid rounded shadow mb-4" style="max-height: 400px; object-fit: cover; width: 100%;">
+    <h1 class="fw-bold">Welcome to Swap'N'Sell</h1>
+  </div>
 {% endblock content %}
