@@ -82,13 +82,14 @@ WSGI_APPLICATION = 'baseapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'swapselldb',
-        'USER': 'postgres',
-        'PASSWORD': 'Slimdking57..',
-        'HOST': 'localhost',
+        'NAME': 'example_1',
+        'USER': 'obasi',
+        'PASSWORD': 'Slimdking57..',  
+        'HOST': 'database-1.c41ea6esk0x2.us-east-1.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
+
 
 
 # Password validation
