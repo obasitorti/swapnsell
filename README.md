@@ -28,7 +28,7 @@ It integrates AWS S3 for media storage, allowing you to store and serve uploaded
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/swapnsell.git
+   git clone https://github.com/obasitorti/swapnsell.git
    cd swapnsell
 
 
