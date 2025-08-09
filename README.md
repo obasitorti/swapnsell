@@ -33,20 +33,18 @@ It integrates AWS S3 for media storage, allowing you to store and serve uploaded
 
 
 2. **Create a virtual environment**
+    ```bash
     python -m venv venv
 
 3. **Activate the virtual environment**
-
     #### Windows
-
     venv\Scripts\activate
 
-    macOS/Linux
-
+    #### macOS/Linux
     source venv/bin/activate
 
 4. **Install dependencies**
-
+    ```bash
     pip install -r requirements.txt
 
 5. **Configure environment variables**
@@ -59,15 +57,15 @@ It integrates AWS S3 for media storage, allowing you to store and serve uploaded
     AWS_STORAGE_BUCKET_NAME=your-s3-bucket-name
 
 6. **Run migrations**
-
+    ```bash
     python manage.py migrate
 
 7. **Create a superuser**
-
+    ```bash
     python manage.py createsuperuser
 
 8. **Run the development server**
-
+    ```bash
     python manage.py runserver
 
 ## Usage
