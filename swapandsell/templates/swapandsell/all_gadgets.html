@@ -8,75 +8,86 @@
 
   <!-- Filter Form -->
   <form method="get" class="mb-4">
-    <div class="row">
+    <div class="row g-3">
       {% for field in my_filter.form %}
-        <div class="col-md-3">
-          <div class="form-group">
-            {{ field.label_tag }}
-            {% if field.field.widget.input_type == "select" %}
-              {{ field|add_class:"form-select" }}
-            {% else %}
-              {{ field|add_class:"form-control" }}
-            {% endif %}
-          </div>
+      <div class="col-md-3 col-6">
+        <div class="form-group">
+          {{ field.label_tag }}
+          {% if field.field.widget.input_type == "select" %}
+            {{ field|add_class:"form-select" }}
+          {% else %}
+            {{ field|add_class:"form-control" }}
+          {% endif %}
         </div>
+      </div>
       {% endfor %}
     </div>
-    <button type="submit" class="btn btn-primary mt-2">Apply Filters</button>
+    <button type="submit" class="btn btn-primary mt-3">Apply Filters</button>
   </form>
 
   <hr>
 
-  <!-- Gadget Cards -->
-  <div class="row">
+  <!-- Gadget Cards Grid -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     {% for listing in all_gadgets %}
-      <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm rounded-4">
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0 rounded-4">
 
-          <!-- Images side by side -->
-          <div class="row g-0">
-            <div class="col-6">
-              {% if listing.photo_of_product %}
-                <img src="{{ listing.photo_of_product.url }}" alt="Primary Image"
-                  class="img-fluid rounded-start-4" style="height: 200px; object-fit: cover; width: 100%;">
-              {% else %}
-                <img src="{% static 'images/placeholder.png' %}" alt="No Image"
-                  class="img-fluid rounded-start-4" style="height: 200px; object-fit: cover; width: 100%;">
-              {% endif %}
-            </div>
-
-            <div class="col-6">
-              {% if listing.another_photo %}
-                <img src="{{ listing.another_photo.url }}" alt="Secondary Image"
-                  class="img-fluid rounded-end-4" style="height: 200px; object-fit: cover; width: 100%;">
-              {% else %}
-                <img src="{% static 'images/placeholder.png' %}" alt="No Image"
-                  class="img-fluid rounded-end-4" style="height: 200px; object-fit: cover; width: 100%;">
-              {% endif %}
-            </div>
+        <!-- Images: side by side on md+, stacked on small screens -->
+        <div class="d-flex flex-column flex-md-row" style="height: 200px; overflow: hidden;">
+          <div class="flex-fill me-md-1 mb-1 mb-md-0">
+            {% if listing.photo_of_product %}
+            <img src="{{ listing.photo_of_product.url }}" class="img-fluid object-fit-cover rounded-top-4 rounded-md-start-4" alt="Primary Image">
+            {% else %}
+            <img src="{% static 'images/placeholder.png' %}" class="img-fluid object-fit-cover rounded-top-4 rounded-md-start-4" alt="No Image">
+            {% endif %}
           </div>
 
-          <!-- Card Content -->
-          <div class="card-body">
-            <h5 class="card-title">{{ listing.name }}</h5>
-            <ul class="list-unstyled small">
-              <li><strong>Condition:</strong> {{ listing.condition }}</li>
-              <li><strong>Sale Type:</strong> {{ listing.sale_type }}</li>
-              <li><strong>Price:</strong> ₦{{ listing.price|floatformat:2 }}</li>
-              <li><strong>Location:</strong> {{ listing.address }}</li>
-              <li><strong>Posted:</strong> {{ listing.listing_date|date:"M d, Y" }}</li>
-            </ul>
-            <a href="{% url 'swapandsell:detail' listing.id %}" class="btn btn-outline-primary w-100 mt-2">
-              View Details
-            </a>
+          <div class="flex-fill ms-md-1">
+            {% if listing.another_photo %}
+            <img src="{{ listing.another_photo.url }}" class="img-fluid object-fit-cover rounded-bottom-4 rounded-md-end-4" alt="Secondary Image">
+            {% else %}
+            <img src="{% static 'images/placeholder.png' %}" class="img-fluid object-fit-cover rounded-bottom-4 rounded-md-end-4" alt="No Image">
+            {% endif %}
           </div>
         </div>
+
+        <!-- Card content -->
+        <div class="card-body">
+          <h5 class="card-title">{{ listing.name }}</h5>
+          <ul class="list-unstyled small mb-2">
+            <li><strong>Condition:</strong> {{ listing.condition }}</li>
+            <li><strong>Sale Type:</strong> {{ listing.sale_type }}</li>
+            <li><strong>Price:</strong> ₦{{ listing.price|floatformat:2 }}</li>
+            <li><strong>Location:</strong> {{ listing.address }}</li>
+            <li><strong>Posted:</strong> {{ listing.listing_date|date:"M d, Y" }}</li>
+          </ul>
+          <a href="{% url 'swapandsell:detail' listing.id %}" class="btn btn-outline-primary w-100">View Details</a>
+        </div>
+
       </div>
+    </div>
     {% empty %}
-      <div class="col-12 text-center">
-        <h4 class="text-muted">No gadgets available at the moment. Check back later!</h4>
-      </div>
+    <div class="col-12 text-center">
+      <h4 class="text-muted">No gadgets available at the moment. Check back later!</h4>
+    </div>
     {% endfor %}
   </div>
 </div>
-{% endblock content %}
+
+<style>
+/* Object-fit helper */
+.object-fit-cover {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* Card hover lift */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  transition: all 0.3s ease-in-out;
+}
+</style>
+{% endblock %}

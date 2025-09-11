@@ -1,19 +1,80 @@
 {% extends "swapandsell/base.html" %}
 
+{% load static %}
+
 {% block content %}
-<div>
+<div class="container py-4">
 
-    <h1>Gadget Details</h1>
-    <h1>{{ gadget.name }}</h1>
-    <p><b>Condition:</b> {{ gadget.condition }}</p>
-    <p><b>Sale Type:</b> {{ gadget.sale_type }}</p>
-    <p><b>Price:</b> $ {{ gadget.price|floatformat:2 }}</p>
-    <p><b>Location:</b> {{ gadget.address }}</p>
-    <p><b>Post Date:</b> {{ gadget.listing_date }}</p>
-    <p><b>Photos:</b></p>
-    <img src="{{ gadget.photo_of_product.url }}" alt="Gadget Image 1" class="img-fluid mb-3" style="max-width: 100%; height: auto;">
-    <img src="{{ gadget.another_photo.url }}" alt="Gadget Image 2" class="img-fluid mb-3" style="max-width: 100%; height: auto;">
+  <h1 class="mb-4 text-center">{{ gadget.name }}</h1>
+
+  <!-- Image Carousel -->
+  <div id="gadgetCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+    <div class="carousel-inner rounded-4 shadow-sm">
+
+      {% if gadget.photo_of_product %}
+      <div class="carousel-item active">
+        <img src="{{ gadget.photo_of_product.url }}" class="d-block w-100 object-fit-cover" style="height: 400px;" alt="Primary Image">
+      </div>
+      {% endif %}
+
+      {% if gadget.another_photo %}
+      <div class="carousel-item {% if not gadget.photo_of_product %}active{% endif %}">
+        <img src="{{ gadget.another_photo.url }}" class="d-block w-100 object-fit-cover" style="height: 400px;" alt="Secondary Image">
+      </div>
+      {% endif %}
+
+    </div>
+
+    <!-- Carousel controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#gadgetCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#gadgetCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <!-- Gadget Details Card -->
+  <div class="card shadow-sm rounded-4 p-4 mb-4">
+    <div class="row g-3 align-items-center">
+      
+      <!-- Details Column -->
+      <div class="col-md-8">
+        <h3 class="fw-bold mb-3">{{ gadget.name }}</h3>
+        <ul class="list-unstyled mb-3 fs-6">
+          <li><strong>Condition:</strong> {{ gadget.condition }}</li>
+          <li><strong>Sale Type:</strong> {{ gadget.sale_type }}</li>
+          <li><strong>Location:</strong> {{ gadget.address }}</li>
+          <li><strong>Post Date:</strong> {{ gadget.listing_date|date:"M d, Y" }}</li>
+        </ul>
+        <span class="badge bg-success fs-5">₦{{ gadget.price|floatformat:2 }}</span>
+      </div>
+
+      <!-- Action Column -->
+      <div class="col-md-4 text-md-end">
+        <a href="#" class="btn btn-primary btn-lg w-100 mb-2">Contact Seller</a>
+        <a href="{% url 'swapandsell:all_gadgets' %}" class="btn btn-outline-secondary w-100">Back to Listings</a>
+      </div>
+
+    </div>
+  </div>
+
 </div>
-{% endblock content %}
 
+<style>
+.object-fit-cover {
+  object-fit: cover;
+  width: 100%;
+}
 
+/* Optional: Adjust carousel height on smaller screens */
+@media (max-width: 768px) {
+  #gadgetCarousel .carousel-item img {
+    height: 250px;
+  }
+}
+</style>
+
+{% endblock %}
