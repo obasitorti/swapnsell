@@ -2,72 +2,80 @@
 {% load static %}
 {% load widget_tweaks %}
 
-
 {% block content %}
 <div class="container py-4">
   <h1 class="mb-4 text-center">Gadget Listings</h1>
 
   <!-- Filter Form -->
   <form method="get" class="mb-4">
-  <div class="row">
-    {% for field in my_filter.form %}
-      <div class="col-md-3">
-        <div class="form-group">
-          {{ field.label_tag }}
-          {% if field.field.widget.input_type == "select" %}
-            {{ field|add_class:"form-select" }}
-          {% else %}
-            {{ field|add_class:"form-control" }}
-          {% endif %}
+    <div class="row">
+      {% for field in my_filter.form %}
+        <div class="col-md-3">
+          <div class="form-group">
+            {{ field.label_tag }}
+            {% if field.field.widget.input_type == "select" %}
+              {{ field|add_class:"form-select" }}
+            {% else %}
+              {{ field|add_class:"form-control" }}
+            {% endif %}
+          </div>
         </div>
-      </div>
-    {% endfor %}
-  </div>
-  <button type="submit" class="btn btn-primary mt-2">Apply Filters</button>
-</form>
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Apply Filters</button>
+  </form>
 
   <hr>
 
   <!-- Gadget Cards -->
   <div class="row">
     {% for listing in all_gadgets %}
-    <div class="col-md-4 mb-4">
-      <div class="card h-100 shadow-sm rounded-4">
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
 
-        {% if listing.photo_of_product %}
-        <img src="{{ listing.photo_of_product.url }}" alt="Primary Image"
-          class="card-img-top rounded-top-4" style="height: 200px; object-fit: cover;">
-        {% else %}
-        <img src="{% static 'images/placeholder.png' %}" alt="No Image"
-          class="card-img-top rounded-top-4" style="height: 200px; object-fit: cover;">
-        {% endif %}
+          <!-- Images side by side -->
+          <div class="row g-0">
+            <div class="col-6">
+              {% if listing.photo_of_product %}
+                <img src="{{ listing.photo_of_product.url }}" alt="Primary Image"
+                  class="img-fluid rounded-start-4" style="height: 200px; object-fit: cover; width: 100%;">
+              {% else %}
+                <img src="{% static 'images/placeholder.png' %}" alt="No Image"
+                  class="img-fluid rounded-start-4" style="height: 200px; object-fit: cover; width: 100%;">
+              {% endif %}
+            </div>
 
-        <div class="card-body">
-          <h5 class="card-title">{{ listing.name }}</h5>
-          <ul class="list-unstyled small">
-            <li><strong>Condition:</strong> {{ listing.condition }}</li>
-            <li><strong>Sale Type:</strong> {{ listing.sale_type }}</li>
-            <li><strong>Price:</strong> ₦{{ listing.price|floatformat:2 }}</li>
-            <li><strong>Location:</strong> {{ listing.address }}</li>
-            <li><strong>Posted:</strong> {{ listing.listing_date|date:"M d, Y" }}</li>
-          </ul>
-          <a href="{% url 'swapandsell:detail' listing.id %}" class="btn btn-outline-primary w-100 mt-2">
-            View Details
-          </a>
+            <div class="col-6">
+              {% if listing.another_photo %}
+                <img src="{{ listing.another_photo.url }}" alt="Secondary Image"
+                  class="img-fluid rounded-end-4" style="height: 200px; object-fit: cover; width: 100%;">
+              {% else %}
+                <img src="{% static 'images/placeholder.png' %}" alt="No Image"
+                  class="img-fluid rounded-end-4" style="height: 200px; object-fit: cover; width: 100%;">
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Card Content -->
+          <div class="card-body">
+            <h5 class="card-title">{{ listing.name }}</h5>
+            <ul class="list-unstyled small">
+              <li><strong>Condition:</strong> {{ listing.condition }}</li>
+              <li><strong>Sale Type:</strong> {{ listing.sale_type }}</li>
+              <li><strong>Price:</strong> ₦{{ listing.price|floatformat:2 }}</li>
+              <li><strong>Location:</strong> {{ listing.address }}</li>
+              <li><strong>Posted:</strong> {{ listing.listing_date|date:"M d, Y" }}</li>
+            </ul>
+            <a href="{% url 'swapandsell:detail' listing.id %}" class="btn btn-outline-primary w-100 mt-2">
+              View Details
+            </a>
+          </div>
         </div>
-
-        {% if listing.another_photo %}
-        <div class="px-3 pb-3">
-          <img src="{{ listing.another_photo.url }}" alt="Secondary Image"
-            class="img-fluid rounded" style="object-fit: contain;">
-        </div>
-        {% endif %}
       </div>
-    </div>
     {% empty %}
-    <div class="col-12 text-center">
-      <h4 class="text-muted">No gadgets available at the moment. Check back later!</h4>
-    </div>
+      <div class="col-12 text-center">
+        <h4 class="text-muted">No gadgets available at the moment. Check back later!</h4>
+      </div>
     {% endfor %}
   </div>
 </div>
