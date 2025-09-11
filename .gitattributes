@@ -1,2 +1,15 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Treat Django templates as Python for language stats
+templates/* linguist-language=Python
+
+# Ignore static assets from language stats
+static/* linguist-vendored
+*.css linguist-vendored
+*.js linguist-vendored
+*.png linguist-vendored
+*.jpg linguist-vendored
+*.jpeg linguist-vendored
+*.gif linguist-vendored
+*.svg linguist-vendored
+
+# Ignore migrations from language stats if you want
+*/migrations/* linguist-vendored
