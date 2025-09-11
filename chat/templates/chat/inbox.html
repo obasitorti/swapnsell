@@ -1,0 +1,21 @@
+{% extends "swapandsell/base.html" %}
+
+{% block content %}
+<div class="container py-4">
+  <h2>Your Inbox</h2>
+  <ul class="list-group">
+    {% for convo in conversations %}
+      <li class="list-group-item">
+        <a href="{% url 'chat:conversation_detail' convo.pk %}">
+          Conversation with 
+          {% if request.user == convo.buyer %} {{ convo.seller.username }}
+          {% else %} {{ convo.buyer.username }} {% endif %}
+          {% if convo.product %} ({{ convo.product.name }}) {% endif %}
+        </a>
+      </li>
+    {% empty %}
+      <li class="list-group-item">No conversations yet.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

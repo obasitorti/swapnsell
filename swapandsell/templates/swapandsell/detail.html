@@ -54,9 +54,13 @@
 
       <!-- Action Column -->
       <div class="col-md-4 text-md-end">
+        <a href="{% url 'chat:start_conversation' gadget.id gadget.user.id %}" class="btn btn-success btn-lg w-100 mb-2">
+          Message Seller
+        </a>
         <a href="#" class="btn btn-primary btn-lg w-100 mb-2">Contact Seller</a>
         <a href="{% url 'swapandsell:all_gadgets' %}" class="btn btn-outline-secondary w-100">Back to Listings</a>
       </div>
+
 
     </div>
   </div>
