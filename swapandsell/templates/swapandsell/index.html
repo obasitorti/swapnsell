@@ -14,14 +14,14 @@
         <h2 class="fw-bold text-center mb-4">About Me</h2>
 
         <p class="text-center mb-4 fs-5">
-            Hi! I’m Obasi Torti, a <strong>Systems Engineering student</strong> specializing in modern software solutions 
+            Hi! I’m Obasi Torti, a Systems Engineering student specializing in modern software solutions 
             and technologies. I develop efficient, scalable applications using a mix of backend and cloud technologies.
         </p>
 
         <h5 class="text-center mb-3">Tools & Technologies I Work With:</h5>
         <div class="d-flex justify-content-center flex-wrap gap-3 mb-4">
             <span class="badge bg-primary px-3 py-2 fs-6 d-flex align-items-center gap-1">
-                <i class="bi bi-python"></i> Python (Django & Flask)
+                <i class="bi bi-python"></i> Python
             </span>
             <span class="badge bg-info text-dark px-3 py-2 fs-6 d-flex align-items-center gap-1">
                 <i class="bi bi-file-code"></i> JavaScript
@@ -32,13 +32,24 @@
             <span class="badge bg-warning text-dark px-3 py-2 fs-6 d-flex align-items-center gap-1">
                 <i class="bi bi-cloud"></i> AWS
             </span>
+            <span class="badge bg-success text-white px-3 py-2 fs-6 d-flex align-items-center gap-1">
+                <i class="bi bi-collection"></i> MongoDB
+            </span>
+            <span class="badge bg-secondary px-3 py-2 fs-6 d-flex align-items-center gap-1">
+                <i class="bi bi-terminal"></i> C
+            </span>
+            <span class="badge bg-dark px-3 py-2 fs-6 d-flex align-items-center gap-1">
+                <i class="bi bi-terminal"></i> C++
+            </span>
         </div>
 
         <div class="text-center">
-            <a href="https://github.com/obasitorti" target="_blank" class="btn btn-dark me-2 px-4 py-2 fs-6 hover-scale">
+            <a href="https://github.com/obasitorti" target="_blank" 
+               class="btn btn-dark me-2 px-4 py-2 fs-6 github-btn">
                 <i class="bi bi-github me-2"></i> GitHub
             </a>
-            <a href="https://www.linkedin.com/in/obasionyekachitorti/" target="_blank" class="btn btn-primary px-4 py-2 fs-6 hover-scale">
+            <a href="https://www.linkedin.com/in/obasionyekachitorti/" target="_blank" 
+               class="btn btn-primary px-4 py-2 fs-6 linkedin-btn">
                 <i class="bi bi-linkedin me-2"></i> LinkedIn
             </a>
         </div>
@@ -79,7 +90,7 @@
                 </h2>
                 <div id="faqCollapseOne" class="accordion-collapse collapse" aria-labelledby="faqHeadingOne" data-bs-parent="#faqAccordion">
                     <div class="accordion-body">
-                        I specialize in Python (Django & Flask), JavaScript, PostgreSQL, and AWS cloud technologies.
+                        I specialize in Python (Django & Flask), JavaScript (NodeJS), PostgreSQL, MongoDB, AWS cloud technologies, and low-level programming with C and C++.
                     </div>
                 </div>
             </div>
@@ -127,29 +138,26 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 </script>
 
 <style>
-{% comment %} /* Hover scale effect for buttons */
-.hover-scale {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.hover-scale:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-}
-
-/* Badge hover effect */
-.badge:hover {
-    transform: translateY(-3px);
-    transition: all 0.3s ease;
-}
-
-/* Accordion button hover */
-.accordion-button:hover {
-    background-color: #f8f9fa;
-} {% endcomment %}
-
 /* Smooth transition for sections */
 section {
     transition: all 0.5s ease-in-out;
+}
+
+/* Hover for navbar links */
+.navbar .nav-link:hover {
+    color: #ffc107 !important;
+    transform: scale(1.1);
+    transition: all 0.2s ease-in-out;
+}
+
+/* Hover for GitHub & LinkedIn buttons */
+.github-btn:hover {
+    background-color: #333 !important;
+    transform: scale(1.05);
+}
+.linkedin-btn:hover {
+    background-color: #0a66c2 !important;
+    transform: scale(1.05);
 }
 </style>
 {% endblock content %}
