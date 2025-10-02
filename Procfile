@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn baseapp.wsgi --log-file -
+web: bash start.sh
