@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from decouple import config
 from baseapp.storages_backends import StaticStorage, MediaStorage
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -157,4 +158,7 @@ else:
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Railway PostgreSQL
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'))
 
