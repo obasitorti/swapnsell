@@ -31,41 +31,43 @@
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     {% for listing in all_gadgets %}
     <div class="col">
-      <div class="card h-100 shadow-sm border-0">
+      <a href="{% url 'swapandsell:detail' listing.id %}" class="card-link">
+        <div class="card h-100 shadow-sm border-0">
 
-        <!-- Images side by side -->
-        <div class="d-flex" style="height: 200px;">
-          <div class="flex-fill me-1">
-            {% if listing.photo_of_product %}
-            <img src="{{ listing.photo_of_product.url }}" class="w-100 h-100 object-fit-cover" alt="Primary Image">
-            {% else %}
-            <img src="{% static 'images/placeholder.png' %}" class="w-100 h-100 object-fit-cover" alt="No Image">
-            {% endif %}
+          <!-- Images (equal split) -->
+          <div class="image-row">
+            <div class="image-col">
+              {% if listing.photo_of_product %}
+              <img src="{{ listing.photo_of_product.url }}" class="img-cover" alt="Primary Image">
+              {% else %}
+              <img src="{% static 'images/placeholder.png' %}" class="img-cover" alt="No Image">
+              {% endif %}
+            </div>
+
+            <div class="image-col">
+              {% if listing.another_photo %}
+              <img src="{{ listing.another_photo.url }}" class="img-cover" alt="Secondary Image">
+              {% else %}
+              <img src="{% static 'images/placeholder.png' %}" class="img-cover" alt="No Image">
+              {% endif %}
+            </div>
           </div>
 
-          <div class="flex-fill ms-1">
-            {% if listing.another_photo %}
-            <img src="{{ listing.another_photo.url }}" class="w-100 h-100 object-fit-cover" alt="Secondary Image">
-            {% else %}
-            <img src="{% static 'images/placeholder.png' %}" class="w-100 h-100 object-fit-cover" alt="No Image">
-            {% endif %}
+          <!-- Card Body -->
+          <div class="card-body">
+            <h5 class="card-title">{{ listing.name }}</h5>
+            <ul class="list-unstyled small mb-2">
+              <li><strong>Condition:</strong> {{ listing.condition }}</li>
+              <li><strong>Sale Type:</strong> {{ listing.sale_type }}</li>
+              <li><strong>Price:</strong> ₦{{ listing.price|floatformat:2 }}</li>
+              <li><strong>Location:</strong> {{ listing.address }}</li>
+              <li><strong>Posted:</strong> {{ listing.listing_date|date:"M d, Y" }}</li>
+            </ul>
+            <span class="btn btn-outline-primary w-100">View Details</span>
           </div>
-        </div>
 
-        <!-- Card content -->
-        <div class="card-body">
-          <h5 class="card-title">{{ listing.name }}</h5>
-          <ul class="list-unstyled small mb-2">
-            <li><strong>Condition:</strong> {{ listing.condition }}</li>
-            <li><strong>Sale Type:</strong> {{ listing.sale_type }}</li>
-            <li><strong>Price:</strong> ₦{{ listing.price|floatformat:2 }}</li>
-            <li><strong>Location:</strong> {{ listing.address }}</li>
-            <li><strong>Posted:</strong> {{ listing.listing_date|date:"M d, Y" }}</li>
-          </ul>
-          <a href="{% url 'swapandsell:detail' listing.id %}" class="btn btn-outline-primary w-100">View Details</a>
         </div>
-
-      </div>
+      </a>
     </div>
     {% empty %}
     <div class="col-12 text-center">
@@ -76,18 +78,41 @@
 </div>
 
 <style>
-/* Force images to fill container */
-.object-fit-cover {
+/* Make whole card clickable */
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* Flex row for equal image split */
+.image-row {
+  display: flex;
+  height: 200px; /* Fixed height for consistency */
+}
+
+.image-col {
+  flex: 1; /* Equal width split */
+  padding: 2px;
+}
+
+/* Ensure images fill their box equally */
+.img-cover {
   object-fit: cover;
   width: 100%;
   height: 100%;
+  display: block;
+  border-radius: 0.25rem;
 }
 
 /* Card hover effect */
+.card {
+  transition: all 0.3s ease-in-out;
+}
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-  transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
 </style>
 {% endblock %}

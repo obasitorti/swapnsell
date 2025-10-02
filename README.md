@@ -1,103 +1,275 @@
 # SwapNSell
 
-SwapNSell is a Django-based web application for listing, selling, and swapping items.  
-It integrates AWS S3 for media storage, allowing you to store and serve uploaded images directly from an Amazon S3 bucket.
+A Django-based marketplace application for buying, selling, and swapping items. Features integrated AWS S3 storage for media files and a responsive, mobile-friendly interface.
 
 ---
 
 ## Features
 
-- User registration and authentication
-- Post items for sale or swap
-- Upload item images (stored in AWS S3)
-- Browse and search for items
-- Responsive UI for desktop and mobile
-- Admin dashboard for content management
+- 🔐 User authentication and registration
+- 📦 Create listings for items to sell or swap
+- 📸 Image uploads with AWS S3 integration
+- 🔍 Search and filter listings
+- 💬 Real-time messaging system
+- 📱 Fully responsive UI
+- 🛡️ Admin dashboard for content management
+
+---
+
+## Screenshots
+
+### Homepage
+![Homepage](screenshots/homepage.png)
+
+### Item Listing
+![Item Listing](screenshots/listings.png)
+
+### Create Listing
+![Post Item](screenshots/addgadget.png)
+
+### Messaging System
+![Messaging](screenshots/messaging.png)
+
+---
+
+## Prerequisites
+
+- Python 3.8 or higher
+- pip package manager
+- AWS account with S3 bucket
+- PostgreSQL database (optional for production)
 
 ---
 
 ## Installation
 
-### Prerequisites
-- Python 3.8+
-- pip
-- virtualenv
-- AWS account with an S3 bucket configured
+### 1. Clone the Repository
 
-### Setup
+```bash
+git clone https://github.com/obasitorti/swapnsell.git
+cd swapnsell
+```
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/obasitorti/swapnsell.git
-   cd swapnsell
+### 2. Create Virtual Environment
 
+```bash
+python -m venv venv
+```
 
-2. **Create a virtual environment**
-    ```bash
-    python -m venv venv
+### 3. Activate Virtual Environment
 
-3. **Activate the virtual environment**
-    #### Windows
-    venv\Scripts\activate
+**Windows:**
+```bash
+venv\Scripts\activate
+```
 
-    #### macOS/Linux
-    source venv/bin/activate
+**macOS/Linux:**
+```bash
+source venv/bin/activate
+```
 
-4. **Install dependencies**
-    ```bash
-    pip install -r requirements.txt
+### 4. Install Dependencies
 
-5. **Configure environment variables**
-    Create a .env file in the project root and add:
+```bash
+pip install -r requirements.txt
+```
 
-    SECRET_KEY=your-django-secret-key
-    DEBUG=True
-    AWS_ACCESS_KEY_ID=your-aws-access-key
-    AWS_SECRET_ACCESS_KEY=your-aws-secret-key
-    AWS_STORAGE_BUCKET_NAME=your-s3-bucket-name
+### 5. Configure Environment Variables
 
-6. **Run migrations**
-    ```bash
-    python manage.py migrate
+Create a `.env` file in the project root directory:
 
-7. **Create a superuser**
-    ```bash
-    python manage.py createsuperuser
+```env
+# Django Settings
+DEBUG=True
+SECRET_KEY=your-django-secret-key
 
-8. **Run the development server**
-    ```bash
-    python manage.py runserver
+# Database (PostgreSQL)
+DB_NAME=your_db_name
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_HOST=your_db_host
+DB_PORT=5432
+
+# AWS S3 Configuration
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+AWS_STORAGE_BUCKET_NAME=your_bucket_name
+AWS_S3_REGION_NAME=us-east-1
+```
+
+**Note:** Copy `.env.example` to `.env` and fill in your actual credentials.
+
+### 6. Set Up AWS S3 Bucket
+
+1. Create an S3 bucket in your AWS account
+2. Set bucket policy for public read access:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicReadGetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::your-bucket-name/*"
+    }
+  ]
+}
+```
+
+3. Create IAM user with S3 permissions and generate access keys
+
+### 7. Run Database Migrations
+
+```bash
+python manage.py migrate
+```
+
+### 8. Collect Static Files
+
+```bash
+python manage.py collectstatic
+```
+
+### 9. Create Superuser (Admin Account)
+
+```bash
+python manage.py createsuperuser
+```
+
+### 10. Run Development Server
+
+```bash
+python manage.py runserver
+```
+
+Visit `http://127.0.0.1:8000` in your browser.
+
+---
 
 ## Usage
+
 ### Posting an Item
 
-    Log in or register.
-
-    Click Post Item.
-
-    Fill in details and upload an image.
-
-    Submit — the image will be stored in AWS S3 and served directly from the bucket.
+1. Register or log in to your account
+2. Click **"Post Item"** from the navigation menu
+3. Fill in item details (title, description, price, category, etc.)
+4. Upload item images (stored automatically in AWS S3)
+5. Submit your listing
 
 ### Browsing Items
 
-    Visit the homepage to see all listed items.
+- View all listings on the homepage
+- Use the search bar to find specific items
+- Filter by categories, price range, or condition
+- Click on any item for detailed information
 
-    Use the search bar to filter results.
+### Messaging
 
-### Admin Management
+- Contact sellers directly through the built-in messaging system
+- View your message history in the Messages section
 
-    Visit /admin and log in with your superuser account.
+### Admin Panel
 
-    Manage items, users, and site settings.
+- Access at `/admin` with your superuser credentials
+- Manage users, listings, and site settings
+- Monitor reported content and user activity
 
+---
+
+## Project Structure
+
+```
+swapnsell/
+├── baseapp/              # Main Django project settings
+├── swapandsell/          # Core app for listings
+├── users/                # User authentication and profiles
+├── chat/                 # Messaging system
+├── static/               # Static files (CSS, JS, images)
+├── templates/            # HTML templates
+├── .env                  # Environment variables (not in Git)
+├── .env.example          # Example environment file
+├── manage.py             # Django management script
+└── requirements.txt      # Python dependencies
+```
+
+---
 
 ## Deployment
 
 For production deployment:
 
-    Set DEBUG=False in .env
+### 1. Update Settings
 
-    Use a production-ready server like Gunicorn or uWSGI
+```env
+DEBUG=False
+ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
+```
 
-    Configure a domain and HTTPS
+### 2. Use Production Server
+
+Install Gunicorn:
+```bash
+pip install gunicorn
+```
+
+Run with Gunicorn:
+```bash
+gunicorn baseapp.wsgi:application --bind 0.0.0.0:8000
+```
+
+### 3. Configure HTTPS
+
+- Use a reverse proxy (Nginx/Apache)
+- Obtain SSL certificate (Let's Encrypt recommended)
+
+### 4. Database
+
+- Use PostgreSQL or MySQL for production
+- Configure database backups
+
+---
+
+## Technologies Used
+
+- **Backend:** Django 5.2.3
+- **Database:** PostgreSQL
+- **Storage:** AWS S3
+- **Frontend:** HTML, CSS, Bootstrap 5, JavaScript
+- **Authentication:** Django built-in auth system
+- **File Uploads:** django-storages, boto3
+
+---
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/new-feature`)
+3. Commit your changes (`git commit -m 'Add new feature'`)
+4. Push to the branch (`git push origin feature/new-feature`)
+5. Open a Pull Request
+
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+## Support
+
+For issues or questions:
+- Open an issue on GitHub
+- Contact: [your-email@example.com]
+
+---
+
+## Acknowledgments
+
+- Django documentation
+- AWS S3 documentation
+- Bootstrap framework
+- All contributors and testers
