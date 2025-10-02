@@ -263,7 +263,7 @@ This project is licensed under the MIT License.
 
 For issues or questions:
 - Open an issue on GitHub
-- Contact: [your-email@example.com]
+- Contact: [obj1torti@gmail.com]
 
 ---
 
