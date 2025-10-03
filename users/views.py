@@ -12,7 +12,7 @@ def register_view(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('users:login')
+            return redirect('swapandsell:index')
     else:
         form = CreateUserForm()
     

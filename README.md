@@ -179,6 +179,21 @@ Visit `http://127.0.0.1:8000` in your browser.
 
 ---
 
+## Testing
+- Visit https://web-production-beda0.up.railway.app/
+
+### Use the following test account to log in:
+- Email/Username: obasi
+- Password: obasi1234.
+
+### This account allows you to:
+- Browse and create listings
+- Upload test images (stored in AWS S3)
+- Send and receive messages
+- Access all core features of the marketplace
+- Please do not change the password or delete test data so others can try it too.
+
+
 ## Project Structure
 
 ```
