@@ -22,6 +22,11 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = ['*']
 
+# Add after ALLOWED_HOSTS
+CSRF_TRUSTED_ORIGINS = [
+    'https://web-production-beda0.up.railway.app',
+    'https://*.up.railway.app',  # Covers all Railway domains
+]
 
 # Application definition
 
